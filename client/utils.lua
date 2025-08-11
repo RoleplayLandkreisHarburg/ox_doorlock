@@ -222,7 +222,7 @@ end)
 RegisterNUICallback('teleportToDoor', function(id, cb)
 	cb(1)
 	SetNuiFocus(false, false)
-	local doorCoords = doors[id].coords + doors[id].offset
+	local doorCoords = vector3(doors[id].coords.x + doors[id].offset.x, doors[id].coords.y + doors[id].offset.y, doors[id].coords.z + doors[id].offset.z)
 	if not doorCoords then return end
 	SetEntityCoords(cache.ped, doorCoords.x, doorCoords.y, doorCoords.z, false, false, false, false)
 end)
