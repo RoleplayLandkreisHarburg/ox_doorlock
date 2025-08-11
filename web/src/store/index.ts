@@ -22,6 +22,9 @@ export interface StoreState {
   hideUi: boolean | null;
   doors: boolean | null;
   holdOpen: boolean | null;
+  offsetx: NumberField;
+  offsety: NumberField;
+  offsetz: NumberField;
 }
 
 interface StateSetters {
@@ -39,6 +42,9 @@ interface StateSetters {
   toggleCheckbox: (type: 'state' | 'doors' | 'auto' | 'lockpick' | 'hideUi' | 'holdOpen') => void;
   setMaxDistance: (value: StoreState['maxDistance']) => void;
   setDoorRate: (value: StoreState['doorRate']) => void;
+  setOffsetX: (value: StoreState['offsetx']) => void;
+  setOffsetY: (value: StoreState['offsety']) => void;
+  setOffsetZ: (value: StoreState['offsetz']) => void;
 }
 
 export const useStore = create<StoreState>(() => ({
@@ -59,6 +65,9 @@ export const useStore = create<StoreState>(() => ({
   hideUi: false,
   doors: false,
   holdOpen: false,
+  offsetx: 0,
+  offsety: 0,
+  offsetz: 0,
 }));
 
 export const defaultState = useStore.getState();
@@ -90,4 +99,7 @@ export const useSetters = create<StateSetters>((set: SetState<StateSetters>, get
       lockpickDifficulty: fn(difficultyFields),
     })),
   setDoorRate: (value: StoreState['doorRate']) => useStore.setState({ doorRate: value }),
+  setOffsetX: (value: StoreState['offsetx']) => useStore.setState({ offsetx: value }),
+  setOffsetY: (value: StoreState['offsety']) => useStore.setState({ offsety: value }),
+  setOffsetZ: (value: StoreState['offsetz']) => useStore.setState({ offsetz: value }),
 }));

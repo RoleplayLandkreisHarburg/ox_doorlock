@@ -73,6 +73,7 @@ MySQL.ready(function()
 						auto = door.slides or door.garage or door.sliding or door.doublesliding,
 						autolock = (door.autolock and door.autolock / 1000) or (door.autoLock and door.autoLock / 1000),
 						coords = door.objCoords,
+						offset = door.offset,
 						heading = door.objHeading and math.floor(door.objHeading + 0.5),
 						model = door.objHash,
 						characters = door.characters,
@@ -109,6 +110,10 @@ MySQL.ready(function()
 					if double and not data.coords then
 						double = data.doors
 						data.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
+					end
+
+					if not data.offset then
+						data.offset = vector3(0, 0, 0)
 					end
 
 					local name = ('%s %s'):format(fileName, k)

@@ -20,6 +20,7 @@ local function encodeData(door)
 		auto = door.auto,
 		autolock = door.autolock,
 		coords = door.coords,
+		offset = door.offset,
 		doors = double and {
 			{
 				coords = double[1].coords,
@@ -58,6 +59,7 @@ local function getDoor(door)
 		name = door.name,
 		state = door.state,
 		coords = door.coords,
+		offset = door.offset,
 		characters = door.characters,
 		groups = door.groups,
 		items = door.items,
@@ -248,7 +250,18 @@ MySQL.ready(function()
 
 	for i = 1, #response do
 		local door = response[i]
-		createDoor(door.id, json.decode(door.data), door.name)
+		door.data = json.decode(door.data)
+		if door.data.offset then
+			door.data.offsetx = door.data.offset.x
+			door.data.offsety = door.data.offset.y
+			door.data.offsetz = door.data.offset.z
+		else
+			door.data.offset = vector3(0, 0, 0)
+			door.data.offsetx = 0
+			door.data.offsety = 0
+			door.data.offsetz = 0
+		end
+		createDoor(door.id, door.data, door.name)
 	end
 
 	isLoaded = true
@@ -313,6 +326,14 @@ RegisterNetEvent('ox_doorlock:editDoorlock', function(id, data)
 			if not data.coords then
 				local double = data.doors
 				data.coords = double[1].coords - ((double[1].coords - double[2].coords) / 2)
+			end
+
+			if not data.offset then
+				if data.offsetx and data.offsety and data.offsetz then
+					data.offset = vector3(data.offsetx, data.offsety, data.offsetz)
+				else
+					data.offset = vector3(0, 0, 0)
+				end
 			end
 
 			if not data.name then

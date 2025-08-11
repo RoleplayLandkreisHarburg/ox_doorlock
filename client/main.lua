@@ -61,7 +61,7 @@ lib.callback('ox_doorlock:getDoors', false, function(data)
 		for index = 1, nearbyDoorsCount do
 			local door = nearbyDoors[index]
 			local double = door.doors
-			door.distance = #(coords - door.coords)
+			door.distance = #(coords - vector3(door.coords.x + door.offset.x, door.coords.y + door.offset.y, door.coords.z + door.offset.z))
 
 			if double then
 				for i = 1, 2 do
@@ -309,8 +309,18 @@ CreateThread(function()
 					if drawSprite and not door.hideUi then
 						local sprite = drawSprite[door.state]
 
+						if not door.offsetx then
+							door.offsetx = 0
+						end
+						if not door.offsety then
+							door.offsety = 0
+						end
+						if not door.offsetz then
+							door.offsetz = 0
+						end
+
 						if sprite then
-							SetDrawOrigin(door.coords.x, door.coords.y, door.coords.z)
+							SetDrawOrigin(door.coords.x + door.offsetx, door.coords.y + door.offsety, door.coords.z + door.offsetz)
 							DrawSprite(sprite[1], sprite[2], sprite[3], sprite[4], sprite[5], sprite[6] * ratio, sprite[7], sprite[8], sprite[9], sprite[10], sprite[11])
 							ClearDrawOrigin()
 						end

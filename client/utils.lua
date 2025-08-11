@@ -179,6 +179,8 @@ RegisterNUICallback('createDoor', function(data, cb)
 		lib.hideTextUI()
 		SetEntityDrawOutline(tempData[1].entity, false)
 
+		data.offset = vector3(data.offsetx, data.offsety, data.offsetz)
+
 		if data.doors then
 			SetEntityDrawOutline(tempData[2].entity, false)
 			tempData[1].entity = nil
@@ -201,6 +203,7 @@ RegisterNUICallback('createDoor', function(data, cb)
 		end
 
 		data.coords = vector3(data.coords.x, data.coords.y, data.coords.z)
+		data.offset = vector3(data.offsetx, data.offsety, data.offsetz)
 		data.distance = nil
 		data.zone = nil
 	end
@@ -219,7 +222,7 @@ end)
 RegisterNUICallback('teleportToDoor', function(id, cb)
 	cb(1)
 	SetNuiFocus(false, false)
-	local doorCoords = doors[id].coords
+	local doorCoords = doors[id].coords + doors[id].offset
 	if not doorCoords then return end
 	SetEntityCoords(cache.ped, doorCoords.x, doorCoords.y, doorCoords.z, false, false, false, false)
 end)

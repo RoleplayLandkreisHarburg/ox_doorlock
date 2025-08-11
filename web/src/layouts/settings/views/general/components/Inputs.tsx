@@ -15,6 +15,9 @@ const Inputs: React.FC = () => {
   const autolockInterval = useStore((state) => state.autolock);
   const interactDistance = useStore((state) => state.maxDistance);
   const doorRate = useStore((state) => state.doorRate);
+  const offsetx = useStore((state) => state.offsetx);
+  const offsety = useStore((state) => state.offsety);
+  const offsetz = useStore((state) => state.offsetz);
 
   //   const [setDoorName, setPasscode, setAutolockInterval, setInteractDistance, setDoorRate] = useSetters((setter) => [
   //     setter.setDoorName,
@@ -29,6 +32,9 @@ const Inputs: React.FC = () => {
   const setAutolockInterval = useSetters((setter) => setter.setAutolock);
   const setInteractDistance = useSetters((setter) => setter.setMaxDistance);
   const setDoorRate = useSetters((setter) => setter.setDoorRate);
+  const setOffsetX = useSetters((setter) => setter.setOffsetX);
+  const setOffsetY = useSetters((setter) => setter.setOffsetY);
+  const setOffsetZ = useSetters((setter) => setter.setOffsetZ);
 
   return (
     <>
@@ -56,6 +62,29 @@ const Inputs: React.FC = () => {
           value={doorRate || 0}
           setValue={(value: number) => setDoorRate(value)}
           infoCircle="Speed the automatic door will move at"
+        />
+      </Grid>
+      <Grid columns={3} sx={{ fontSize: 16 }}>
+        <Input
+          label="Offset X"
+          type="number"
+          value={offsetx || 0}
+          setValue={(value: number) => setOffsetX(value)}
+          infoCircle="Offset side to side"
+        />
+        <Input
+          label="Offset Y"
+          type="number"
+          value={offsety || 0}
+          setValue={(value: number) => setOffsetY(value)}
+          infoCircle="Offset forward back"
+        />
+        <Input
+          label="Offset Z"
+          type="number"
+          value={offsetz || 0}
+          setValue={(value: number) => setOffsetZ(value)}
+          infoCircle="Offset up down"
         />
       </Grid>
     </>
